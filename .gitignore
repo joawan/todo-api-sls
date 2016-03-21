@@ -1,0 +1,12 @@
+logs
+*.log
+npm-debug.log
+pids
+*.pid
+*.seed
+dist
+.lock-wscript
+build/Release
+node_modules
+admin.env
+.env

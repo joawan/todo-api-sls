@@ -1,0 +1,5 @@
+{
+  "region": "eu-west-1",
+  "resourcesStackName": "todo-api-sls-dev-r",
+  "iamRoleArnLambda": "arn:aws:iam::956702173572:role/todo-api-sls-dev-r-IamRoleLambda-14GYA2QWR6930"
+}
