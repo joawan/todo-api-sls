@@ -1,6 +1,0 @@
-{
-  "project": "todo-api-sls",
-  "projectBucket": "serverless.eu-west-1.todp-api-sls",
-  "domain": "todp-api-sls",
-  "notificationEmail": "joakim.wanggren@gmail.com"
-}

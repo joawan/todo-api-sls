@@ -2,9 +2,11 @@
   "name": "todo-api-sls",
   "version": "0.0.1",
   "profile": "serverless-v0.4.2",
-  "location": "https://github.com/...",
+  "location": "https://github.com/joawan/todo-api-sls",
   "author": "",
   "description": "A Slick New Serverless Project",
   "custom": {},
-  "plugins": []
+  "plugins": [
+    "serverless-optimizer-plugin"
+  ]
 }
