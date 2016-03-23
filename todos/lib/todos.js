@@ -1,5 +1,6 @@
 vogels = require('vogels');
 joi = require('joi');
+_ = require('lodash');
 
 vogels.AWS.config.update({ region: process.env.AWS_REGION });
 
@@ -13,21 +14,21 @@ var Todo = vogels.define('Todo', {
   tableName: process.env.DYNAMODB_TODO_TABLE,
   schema: {
     id: vogels.types.uuid(),
-    title: joi.string(),
-    done: joi.bool()
+    title: joi.string().required(),
+    done: joi.bool().default(false)
   }
 });
 
 module.exports.list = function(params, cb) {
   Todo.scan().loadAll().exec(function(err, res) {
-    var items = res ? res.Items : null;
+    var items = res ? res.Items : [];
     cb(err, items)
   })
 };
 
 module.exports.show = function(params, cb) {
   Todo.get(params.pathId, function(err, item) {
-    cb(err, item);
+    cb(err, item || {});
   });
 };
 
@@ -38,10 +39,18 @@ module.exports.create = function(params, cb) {
 };
 
 module.exports.update = function(params, cb) {
-  params.id = params.pathId;
-  delete params.pathId;
+  Todo.get(params.pathId, function(err, item) {
+    if (err) {
+      return cb(err, item);
+    }
+    if (!item) {
+      return cb('No matching todo found');
+    }
 
-  Todo.update(params, function(err, item) {
-    cb(err, item);
+    var update = item.get();
+    _.assign(update, _.pick(params, ['title', 'done']));
+    Todo.update(update, function(err, res) {
+      cb(err, res);
+    });
   });
 };
