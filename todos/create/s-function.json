@@ -7,7 +7,7 @@
   "memorySize": 128,
   "custom": {
     "excludePatterns": [],
-    "envVars": []
+    "envVars": [ "DYNAMODB_TODO_TABLE", "AWS_REGION" ]
   },
   "endpoints": [
     {

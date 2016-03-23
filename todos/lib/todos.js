@@ -1,43 +1,47 @@
-/**
- * Lib
- */
+vogels = require('vogels');
+joi = require('joi');
 
-module.exports.list = function(event, cb) {
+vogels.AWS.config.update({ region: process.env.AWS_REGION });
 
-  var response = {
-    function: 'list',
-    event: event
-  };
+if (process.env.DYNAMODB_ENDPOINT) {
+  vogels.AWS.config.dynamodb = { endpoint: process.env.DYNAMODB_ENDPOINT };
+}
 
-  return cb(null, response);
+var Todo = vogels.define('Todo', {
+  hashKey: 'id',
+  timestamps: true,
+  tableName: process.env.DYNAMODB_TODO_TABLE,
+  schema: {
+    id: vogels.types.uuid(),
+    title: joi.string(),
+    done: joi.bool()
+  }
+});
+
+module.exports.list = function(params, cb) {
+  Todo.scan().loadAll().exec(function(err, res) {
+    var items = res ? res.Items : null;
+    cb(err, items)
+  })
 };
 
-module.exports.show = function(event, cb) {
-
-  var response = {
-    function: 'show',
-    event: event
-  };
-
-  return cb(null, response);
+module.exports.show = function(params, cb) {
+  Todo.get(params.pathId, function(err, item) {
+    cb(err, item);
+  });
 };
 
-module.exports.create = function(event, cb) {
-
-  var response = {
-    function: 'create',
-    event: event
-  };
-
-  return cb(null, response);
+module.exports.create = function(params, cb) {
+  Todo.create(params, function(err, item) {
+    cb(err, item)
+  });
 };
 
-module.exports.update = function(event, cb) {
+module.exports.update = function(params, cb) {
+  params.id = params.pathId;
+  delete params.pathId;
 
-  var response = {
-    function: 'update',
-    event: event
-  };
-
-  return cb(null, response);
+  Todo.update(params, function(err, item) {
+    cb(err, item);
+  });
 };
