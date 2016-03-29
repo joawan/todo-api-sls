@@ -1,9 +1,0 @@
-{
-  "name": "todos",
-  "runtime": "nodejs",
-  "custom": {
-    "optimize": {
-        "exclude": ["aws-sdk"]
-    }
-  }
-}

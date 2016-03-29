@@ -9,5 +9,4 @@ dist
 build/Release
 node_modules
 admin.env
-.env
 _meta/

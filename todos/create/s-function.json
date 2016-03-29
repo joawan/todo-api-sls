@@ -1,5 +1,6 @@
 {
   "name": "create",
+  "runtime": "nodejs",
   "customName": false,
   "customRole": false,
   "handler": "create/handler.handler",
@@ -7,7 +8,14 @@
   "memorySize": 128,
   "custom": {
     "excludePatterns": [],
-    "envVars": [ "DYNAMODB_TODO_TABLE", "AWS_REGION" ]
+    "envVars": [ "DYNAMODB_TODO_TABLE", "AWS_REGION" ],
+    "optimize": {
+        "exclude": ["aws-sdk"]
+    }
+  },
+  "environment": {
+    "DYNAMODB_TODO_TABLE": "${envDynamoDBTodoTable}",
+    "AWS_REGION": "${region}"
   },
   "endpoints": [
     {
