@@ -22,19 +22,19 @@ var Todo = vogels.define('Todo', {
 module.exports.list = function(params, cb) {
   Todo.scan().loadAll().exec(function(err, res) {
     var items = res ? res.Items : [];
-    cb(err, items)
+    return cb(err, items)
   })
 };
 
 module.exports.show = function(params, cb) {
   Todo.get(params.pathId, function(err, item) {
-    cb(err, item || {});
+    return cb(err, item);
   });
 };
 
 module.exports.create = function(params, cb) {
-  Todo.create(params, function(err, item) {
-    cb(err, item)
+  Todo.create(params.body, function(err, item) {
+    return cb(err, item)
   });
 };
 
@@ -48,9 +48,9 @@ module.exports.update = function(params, cb) {
     }
 
     var update = item.get();
-    _.assign(update, _.pick(params, ['title', 'done']));
+    _.assign(update, _.pick(params.body, ['title', 'done']));
     Todo.update(update, function(err, res) {
-      cb(err, res);
+      return cb(err, res);
     });
   });
 };
