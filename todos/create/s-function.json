@@ -28,10 +28,11 @@
       "requestTemplates": "$${apiRequestTemplate}",
       "responses": {
         "400": {
-          "statusCode": "400"
+          "statusCode": "400",
+          "selectionPattern": "^400:.*"
         },
         "default": {
-          "statusCode": "200",
+          "statusCode": "201",
           "responseParameters": {},
           "responseModels": {
             "application/json": "todoObject"

@@ -27,8 +27,9 @@
       "requestParameters": {},
       "requestTemplates": "$${apiRequestTemplate}",
       "responses": {
-        "400": {
-          "statusCode": "400"
+        "500": {
+          "statusCode": "500",
+          "selectionPattern": "^500:.*"
         },
         "default": {
           "statusCode": "200",

@@ -28,7 +28,12 @@
       "requestTemplates": "$${apiRequestTemplate}",
       "responses": {
         "404": {
-          "statusCode": "404"
+          "statusCode": "404",
+          "selectionPattern": "^404:.*"
+        },
+        "500": {
+          "statusCode": "500",
+          "selectionPattern": "^500:.*"
         },
         "default": {
           "statusCode": "200",

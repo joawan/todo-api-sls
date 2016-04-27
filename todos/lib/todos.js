@@ -21,36 +21,51 @@ const Todo = vogels.define('Todo', {
 
 module.exports.list = function list(params, cb) {
   Todo.scan().loadAll().exec(function listCallback(err, res) {
+    if (err) { return cb('500: DB Error'); }
     const items = res ? res.Items : [];
     return cb(err, items);
   });
 };
 
 module.exports.show = function show(params, cb) {
-  Todo.get(params.pathId, cb);
+  Todo.get(params.pathId, function showCallback(err, item) {
+    if (err) { return cb('500: DB Error'); }
+    if (!item) { return cb('404: Item not found'); }
+    return cb(err, item);
+  });
 };
 
 module.exports.create = function create(params, cb) {
   const data = params.body || params;
-  Todo.create(data, cb);
+  Todo.create(data, function createCallback(err, item) {
+    if (err) { return cb('400: {e}'.replace('{e}', err)); }
+    return cb(err, item);
+  });
 };
 
 module.exports.update = function update(params, cb) {
-  Todo.get(params.pathId, function updateCallback(err, item) {
-    if (err) {
-      return cb(err, item);
-    }
-    if (!item) {
-      return cb('No matching todo found');
-    }
+  Todo.get(params.pathId, function getCallback(getErr, item) {
+    if (getErr) { return cb('500: DB Error'); }
+    if (!item) { return cb('404: Item not found'); }
 
     const data = item.get();
     const body = params.body || params;
     _.assign(data, _.pick(body, ['title', 'done']));
-    return Todo.update(data, cb);
+    return Todo.update(data, function updateCallback(updateErr, updatedItem) {
+      if (updateErr) { return cb('500: DB Error'); }
+      return cb(updateErr, updatedItem);
+    });
   });
 };
 
 module.exports.remove = function remove(params, cb) {
-  Todo.destroy(params.pathId, cb);
+  Todo.get(params.pathId, function getCallback(getErr, item) {
+    if (getErr) { return cb('500: DB Error'); }
+    if (!item) { return cb('404: Item not found'); }
+
+    return Todo.destroy(params.pathId, function destroyCallback(destroyErr) {
+      if (destroyErr) { return cb('500: DB Error'); }
+      return cb(destroyErr, item);
+    });
+  });
 };

@@ -25,8 +25,3 @@ $ sls offline start
 # To deploy to AWS
 $ sls dash deploy
 ```
-
-### Todo
-* Improve error handling
-* Use Lambda Error Regex to get Gateway to respond with other than 200
-* Look into Swagger documentation of API
