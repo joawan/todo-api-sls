@@ -20,7 +20,7 @@ const Todo = vogels.define('Todo', {
 });
 
 module.exports.list = function list(params, cb) {
-  Todo.scan().loadAll().exec((err, res) => {
+  Todo.scan().loadAll().exec(function listCallback(err, res) {
     const items = res ? res.Items : [];
     return cb(err, items);
   });
@@ -36,7 +36,7 @@ module.exports.create = function create(params, cb) {
 };
 
 module.exports.update = function update(params, cb) {
-  Todo.get(params.pathId, (err, item) => {
+  Todo.get(params.pathId, function updateCallback(err, item) {
     if (err) {
       return cb(err, item);
     }
