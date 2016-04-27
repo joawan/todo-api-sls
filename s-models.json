@@ -1,0 +1,18 @@
+{
+  "todoObject": {
+    "type": "object",
+    "properties": {
+      "id": {"type": "string"},
+      "title": {"type": "string"},
+      "done": {"type": "boolean"},
+      "createdAt": {"type": "string"},
+      "updatedAt": {"type": "string"}
+    }
+  },
+  "todoList": {
+    "type": "array",
+    "items": {
+      "$ref": "todoObject"
+    }
+  }
+}

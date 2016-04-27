@@ -14,6 +14,7 @@
   "plugins": [
     "serverless-optimizer-plugin",
     "serverless-offline",
-    "serverless-cors-plugin"
+    "serverless-cors-plugin",
+    "serverless-models-plugin"
   ]
 }
