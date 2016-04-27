@@ -54,3 +54,12 @@ module.exports.update = function(params, cb) {
     });
   });
 };
+
+module.exports.remove = function(params, cb) {
+  Todo.destroy(params.pathId, function(err) {
+    if (err) {
+      return cb(err);
+    }
+    return cb(null, {});
+  });
+}

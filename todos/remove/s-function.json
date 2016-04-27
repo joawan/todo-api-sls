@@ -1,0 +1,45 @@
+{
+  "name": "remove",
+  "runtime": "nodejs",
+  "customName": false,
+  "customRole": false,
+  "handler": "remove/handler.handler",
+  "timeout": 6,
+  "memorySize": 128,
+  "custom": {
+    "excludePatterns": [],
+    "envVars": [ "DYNAMODB_TODO_TABLE", "AWS_REGION" ],
+    "optimize": {
+        "exclude": ["aws-sdk"]
+    }
+  },
+  "environment": {
+    "DYNAMODB_TODO_TABLE": "${envDynamoDBTodoTable}",
+    "AWS_REGION": "${region}"
+  },
+  "endpoints": [
+    {
+      "path": "todos/{id}",
+      "method": "DELETE",
+      "type": "AWS",
+      "authorizationType": "none",
+      "apiKeyRequired": false,
+      "requestParameters": {},
+      "requestTemplates": "$${apiRequestTemplate}",
+      "responses": {
+        "404": {
+          "statusCode": "404"
+        },
+        "default": {
+          "statusCode": "200",
+          "responseParameters": {},
+          "responseModels": {},
+          "responseTemplates": {
+            "application/json": ""
+          }
+        }
+      }
+    }
+  ],
+  "events": []
+}
