@@ -1,6 +1,6 @@
 {
   "name": "list",
-  "runtime": "nodejs",
+  "runtime": "nodejs4.3",
   "customName": false,
   "customRole": false,
   "handler": "list/handler.handler",
