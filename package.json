@@ -1,10 +1,13 @@
 {
   "name": "todo-api-sls",
   "version": "0.0.1",
-  "description": "A Serverless Project and its Serverless Plugin dependencies.",
-  "author": "me",
+  "description": "Simple Todo API using the Serverless Framework",
+  "author": "Joakim Wånggren",
   "license": "MIT",
   "private": false,
+  "scripts": {
+    "lint": "eslint todos/lib todos/**/handler.js"
+  },
   "repository": {
     "type": "git",
     "url": "git://github.com/"
@@ -13,5 +16,9 @@
     "serverless-offline": "^2.2.1",
     "serverless-optimizer-plugin": "^2.0.0"
   },
-  "devDependencies": {}
+  "devDependencies": {
+    "eslint": "^2.8.0",
+    "eslint-config-airbnb": "^8.0.0",
+    "eslint-plugin-import": "^1.6.0"
+  }
 }

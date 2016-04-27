@@ -1,12 +1,5 @@
-'use strict';
+const lib = require('../lib/todos');
 
-// Require Logic
-var lib = require('../lib/todos');
-
-// Lambda Handler
-module.exports.handler = function(event, context) {
-
-  lib.list(event, function(error, response) {
-    return context.done(error, response);
-  });
+module.exports.handler = function handler(event, context) {
+  lib.list(event, context.done);
 };
